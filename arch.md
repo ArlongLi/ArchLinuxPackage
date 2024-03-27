@@ -2,7 +2,7 @@
 # 蓝牙 打印机
 ```
 # 安装 
-sudo pacman -S bluez bluez-utils cups cups-pdf system-config-printer
+sudo pacman -S bluez bluez-utils cups cups-pdf git system-config-printer
 
 # kde printer
 print-manager
@@ -21,7 +21,11 @@ sudo systemctl start cups.service
 vim /etc/cups/cups-pdf.conf
 sudo sed -i '$a\Out /home/${USER}/PDF' /etc/cups/cups-pdf.conf
 
-wqy-zenhei wqy-microhei wqy-microhei-lite noto-fonts noto-fonts-cjk noto-fonts-emoji 
+# Fonts
+
+wqy-zenhei wqy-microhei wqy-microhei-lite wqy-bitmapfont 
+noto-fonts noto-fonts-cjk noto-fonts-emoji 
+adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts 
 ```
 # fcitx5
 ```
@@ -80,8 +84,10 @@ pamac-all
 ```
 ## Arch Amd
 
-mesa xf86-video-amdgpu xf86-video-ati libva-mesa-driver vulkan-radeon 
-mesa-vdpau
+mesa xf86-video-amdgpu lib32-mesa vulkan-radeon lib32-vulkan-radeon
+libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
+
+
 
 # Gnome扩展
 ```
@@ -106,28 +112,29 @@ swapFile(){
 ```
 
 ----------------------------
+# kde-applications
+gwenview spectacle dragon 
+arianna colord-kde kamera kcolorchooser koko kolourpaint kruler okular skanlite
+
+
 # 缩略图
+## Dolphin File previews
+kdegraphics-thumbnailers: Image files, PDFs and Blender application files.
+kimageformats5: Gimp .xcf files
+libheif: HEIF files
+qt5-imageformats : .webp, .tiff, .tga, .jp2 files
+resvgAUR: Fast and accurate SVG image thumbnails
+kdesdk-thumbnailers: Plugins for the thumbnailing system
+ffmpegthumbs: Video files (based on ffmpeg)
+raw-thumbnailerAUR: .raw files
+taglib : Audio files
+kde-thumbnailer-apkAUR: Android package files
+
+在“设置”>“配置 Dolphin...”>“常规”>“预览”中启用所需文件类型的预览显示。
 ```
-sudo pacman -S tumbler webp-pixbuf-loader poppler-glib ffmpegthumbnailer freetype2 libgsf gnome-epub-thumbnailer f3d
-
-tumbler：图像文件。在某些情况下，还必须安装此软件才能将缩略图功能扩展到其他文件类型。
-webp-pixbuf-loader：.webp图像
-poppler-glib：Adobe.pdf文件
-ffmpegthumbnailer：视频文件
-freetype2：字体文件
-libgsf：.odf文件
-
-totem：视频文件和标记的音频文件（仅限GNOME 文件和 Caja）
-evince或atril：.pdf文件
-gnome-epub-thumbnailer：.epub和.mobi电子书文件
-mcomix AUR：.cbr漫画档案
-folderpreview AUR：文件夹缩略图
-f3d：3D 文件，包括 glTF、stl、step、ply、obj、fbx。
+sudo pacman -S kdegraphics-thumbnailers kimageformats5 libheif kdesdk-thumbnailers ffmpegthumbs taglib 
 ```
 
-有时不显示视频缩略图。要解决这个问题（如nautilus 上没有视频缩略图中所述，您必须安装ffmpegthumbnailer、gst-libav、gst-plugins-ugly，并删除~/.cache/thumbnailsfails/gnome-thumbnail-factory/.
-
-ffmpegthumbnailer gst-libav gst-plugins-ugly
 
 # WPS
 ```
