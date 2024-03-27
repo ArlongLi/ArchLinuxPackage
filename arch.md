@@ -2,25 +2,29 @@
 # 蓝牙 打印机
 ```
 # 安装 
-sudo pacman -S bluez bluez-utils cups cups-pdf git system-config-printer
+sudo pacman -S bluez bluez-utils cups cups-pdf git flatpak print-manager system-config-printer
+```
+## flatpak
+```
+sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
+```
 
-# kde printer
-print-manager
 
 # 开机启动
+```
 sudo systemctl enable bluetooth.service
-
 sudo systemctl enable avahi-daemon.service
+sudo systemctl enable cups.service
+```
 # 立即开启
-
+```
 sudo systemctl start bluetooth.service
 
-sudo systemctl enable cups.service
 sudo systemctl start cups.service
 
 vim /etc/cups/cups-pdf.conf
 sudo sed -i '$a\Out /home/${USER}/PDF' /etc/cups/cups-pdf.conf
-
+```
 # Fonts
 
 wqy-zenhei wqy-microhei wqy-microhei-lite wqy-bitmapfont 
@@ -57,10 +61,7 @@ GTK_IM_MODULE=ibus
 QT_IM_MODULE=ibus
 XMODIFIERS=@im=ibus
 
-
 sudo sed -i '$a\GTK_IM_MODULE=ibus\nQT_IM_MODULE=ibus\nXMODIFIERS=@im=ibus' /etc/environment
-
-
 
 ```
 # 个人目录
@@ -78,15 +79,15 @@ git clone https://aur.archlinux.org/yay.git
 
 makepkg -si
 
-pamac-nosnap
-pamac-all
+pamac-aur
+google-chrome
 
 ```
 ## Arch Amd
-
+```
 mesa xf86-video-amdgpu lib32-mesa vulkan-radeon lib32-vulkan-radeon
 libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
-
+```
 
 
 # Gnome扩展
@@ -113,12 +114,14 @@ swapFile(){
 
 ----------------------------
 # kde-applications
+```
 gwenview spectacle dragon 
 arianna colord-kde kamera kcolorchooser koko kolourpaint kruler okular skanlite
-
+```
 
 # 缩略图
 ## Dolphin File previews
+```
 kdegraphics-thumbnailers: Image files, PDFs and Blender application files.
 kimageformats5: Gimp .xcf files
 libheif: HEIF files
@@ -129,7 +132,7 @@ ffmpegthumbs: Video files (based on ffmpeg)
 raw-thumbnailerAUR: .raw files
 taglib : Audio files
 kde-thumbnailer-apkAUR: Android package files
-
+```
 在“设置”>“配置 Dolphin...”>“常规”>“预览”中启用所需文件类型的预览显示。
 ```
 sudo pacman -S kdegraphics-thumbnailers kimageformats5 libheif kdesdk-thumbnailers ffmpegthumbs taglib 
