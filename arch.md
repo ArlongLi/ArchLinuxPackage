@@ -34,7 +34,7 @@ vim /etc/cups/cups-pdf.conf
 sudo sed -i '$a\Out /home/${USER}/PDF' /etc/cups/cups-pdf.conf
 ```
 # Fonts
-
+```
 wqy-zenhei wqy-microhei wqy-microhei-lite wqy-bitmapfont 
 noto-fonts noto-fonts-cjk noto-fonts-emoji 
 adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts 
