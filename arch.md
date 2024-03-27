@@ -122,7 +122,7 @@ swapFile(){
 ----------------------------
 # kde-applications
 ```
-gwenview spectacle dragon 
+gwenview spectacle dragon partitionmanager
 arianna colord-kde kamera kcolorchooser koko kolourpaint kruler okular skanlite
 ```
 
