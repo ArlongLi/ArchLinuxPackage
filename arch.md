@@ -2,13 +2,21 @@
 # 蓝牙 打印机
 ```
 # 安装 
-sudo pacman -S bluez bluez-utils cups cups-pdf git flatpak print-manager system-config-printer
+sudo pacman -S bluez bluez-utils cups cups-pdf fuse2 git flatpak print-manager system-config-printer
+firefox-i18n-zh-cn
+fuse2 
+fuse3
+exfat-utils dosfstools #查一下安装系统
+exfatprogs #查一下安装系统
 ```
 ## flatpak
 ```
 sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
 ```
-
+# 使用bios时间,同步Windows
+```
+timedatectl set-local-rtc 1
+```
 
 # 开机启动
 ```
@@ -46,7 +54,6 @@ GLFW_IM_MODULE=ibus
 
 
 sudo sed -i '$a\GTK_IM_MODULE=fcitx\nQT_IM_MODULE=fcitx\nXMODIFIERS=@im=fcitx\nSDL_IM_MODULE=fcitx\nINPUT_METHOD=fcitx\nGLFW_IM_MODULE=ibus' /etc/environment
-
 
 
 /home/${USER}/t.txt
