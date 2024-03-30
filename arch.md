@@ -8,6 +8,8 @@ fuse2
 fuse3
 exfat-utils dosfstools #查一下安装系统
 exfatprogs #查一下安装系统
+plasma-firewall firewalld
+
 ```
 ## flatpak
 ```
@@ -20,6 +22,7 @@ timedatectl set-local-rtc 1
 
 # 开机启动
 ```
+sudo systemctl enable firewalld.service
 sudo systemctl enable bluetooth.service
 sudo systemctl enable avahi-daemon.service
 sudo systemctl enable cups.service
