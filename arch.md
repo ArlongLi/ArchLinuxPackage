@@ -164,3 +164,17 @@ sudo cp -v /usr/lib/libtiff.so.6.0.2 /usr/lib/libtiff.so.5
 ```
 /etc/pacman.conf
 ```
+# NVIDIA
+## 1安装驱动
+```
+nvidia  (for use with the linux kernel) 
+nvidia-lts (for use with the linux-lts kernel)
+nvidia-dkms (for all other kernels)
+
+lib32-nvidia-utils
+
+
+```
+## 5
+kms从HOOKS数组中删除/etc/mkinitcpio.conf并重新生成 initramfs。这将阻止 initramfs 包含该nouveau模块，确保内核在早期启动期间无法加载该模块。
+
