@@ -1,6 +1,6 @@
 
 # 蓝牙 打印机
-```
+```python
 # 安装 
 sudo pacman -S bluez bluez-utils cups cups-pdf fuse2 git flatpak print-manager system-config-printer
 firefox-i18n-zh-cn
@@ -9,6 +9,7 @@ fuse3
 exfat-utils dosfstools #查一下安装系统
 exfatprogs #查一下安装系统
 plasma-firewall firewalld
+xdg-desktop-portal xdg-desktop-portal-gtk 
 
 ```
 ## flatpak
@@ -43,11 +44,12 @@ noto-fonts noto-fonts-cjk noto-fonts-emoji
 adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts 
 ```
 # fcitx5
-```
+```python
 fcitx5-im fcitx5-chinese-addons
 
 sudo vim /etc/environment
 
+#前两项在Wayland下去掉
 GTK_IM_MODULE=fcitx
 QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
@@ -175,6 +177,10 @@ lib32-nvidia-utils
 
 
 ```
+### systemd-boot
+/boot/loader/entries/arch.conf
+nvidia_drm.modeset=1
+nvidia_drm.fbdev=1
 ## 5
 kms从HOOKS数组中删除/etc/mkinitcpio.conf并重新生成 initramfs。这将阻止 initramfs 包含该nouveau模块，确保内核在早期启动期间无法加载该模块。
 
