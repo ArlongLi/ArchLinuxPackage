@@ -12,6 +12,19 @@ plasma-firewall firewalld
 xdg-desktop-portal xdg-desktop-portal-gtk 
 
 ```
+## 允许通过PolicyKit进行管理员身份验证
+```
+/etc/polkit-1/rules.d/49-allow-passwordless-printer-admin.rules
+
+polkit.addRule(function(action, subject) { 
+    if (action.id == "org.opensuse.cupspkhelper.mechanism.all-edit" && 
+        subject.isInGroup("wheel")){ 
+        return polkit.Result.YES; 
+    } 
+});
+
+```
+
 ## flatpak
 ```
 sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
@@ -103,8 +116,9 @@ libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
 
 
 # Gnome扩展
-```
-sudo pacman -S gpaste gnome-shell-extension-appindicator gnome-shell-extension-desktop-icons-ng gnome-shell-extension-vitals 
+```python
+sudo pacman -S gpaste gnome-shell-extension-appindicator gnome-shell-extension-desktop-icons-ng 
+#gnome-shell-extension-vitals   系统监视器带扩展了，这项可以不用 
 
 ```
 # 交换文件
@@ -206,3 +220,14 @@ nvidia_drm.fbdev=1
 ## 5
 kms从HOOKS数组中删除/etc/mkinitcpio.conf并重新生成 initramfs。这将阻止 initramfs 包含该nouveau模块，确保内核在早期启动期间无法加载该模块。
 
+# 管理员身份
+```
+/etc/polkit-1/rules.d/49-rootpw_global.rules
+
+/* 始终通过提示输入root来验证管理员身份
+ * 密码，类似于sudo中的rootpw选项
+ */
+polkit.addAdminRule(function(action, subject) {
+    return ["unix-user:root"];
+});
+```
