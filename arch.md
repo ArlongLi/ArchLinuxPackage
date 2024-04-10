@@ -117,7 +117,7 @@ libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
 
 # Gnome扩展
 ```python
-sudo pacman -S gpaste gnome-shell-extension-appindicator gnome-shell-extension-desktop-icons-ng 
+sudo pacman -S gpaste gnome-shell-extension-appindicator gnome-shell-extension-desktop-icons-ng gnome-browser-connector 
 #gnome-shell-extension-vitals   系统监视器带扩展了，这项可以不用 
 
 ```
