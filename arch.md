@@ -214,11 +214,20 @@ lib32-nvidia-utils
 
 ```
 ### systemd-boot
+ls /boot/loader/entries/    编辑.conf文件加入以下nvidia项 
 /boot/loader/entries/arch.conf
+```
 nvidia_drm.modeset=1
 nvidia_drm.fbdev=1
+```
 ## 5
 kms从HOOKS数组中删除/etc/mkinitcpio.conf并重新生成 initramfs。这将阻止 initramfs 包含该nouveau模块，确保内核在早期启动期间无法加载该模块。
+```
+nvidia nvidia_modeset nvidia_uvm nvidia_drm
+
+
+mkinitcpio -P
+```
 
 # 管理员身份
 ```
