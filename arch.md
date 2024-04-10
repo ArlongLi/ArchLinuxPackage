@@ -104,7 +104,7 @@ libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
 
 # Gnome扩展
 ```
-sudo pacman -S gpaste gnome-shell-extension-appindicator
+sudo pacman -S gpaste gnome-shell-extension-appindicator gnome-shell-extension-desktop-icons-ng gnome-shell-extension-vitals 
 
 ```
 # 交换文件
@@ -150,6 +150,28 @@ kde-thumbnailer-apkAUR: Android package files
 sudo pacman -S kdegraphics-thumbnailers kimageformats5 libheif kdesdk-thumbnailers ffmpegthumbs taglib 
 ```
 
+## Gnome
+https://wiki.archlinux.org/title/File_manager_functionality#Thumbnail_previews
+tumbler: Image files. This must also be installed to expand thumbnailing capabilities to other file types in some cases.
+webp-pixbuf-loader: .webp images
+poppler-glib: Adobe .pdf files
+ffmpegthumbnailer: Video files
+freetype2: Font files
+libgsf: .odf files
+raw-thumbnailerAUR: .raw files
+totem: Video files and tagged audio files (GNOME Files, and Caja only)
+evince or atril: .pdf files
+gnome-epub-thumbnailer: .epub and .mobi ebook files
+mcomixAUR: .cbr comicbook archives
+folderpreviewAUR: folder thumbnailer
+f3d: 3D files, including glTF, stl, step, ply, obj, fbx.
+有时视频缩略图不显示。要解决这个问题（如在Nautilus上没有视频缩略图中所提到的），您必须安装ffmpegthumbnailer、gst-libav、gst-plugins-ugly，并删除~/.cache/thumbnails/fail/的内容。
+```
+tumbler webp-pixbuf-loader poppler-glib ffmpegthumbnailer freetype2 libgsf totem evince gnome-epub-thumbnailer f3d
+ 
+ffmpegthumbnailer gst-libav gst-plugins-ugly 
+
+```
 
 # WPS
 ```
