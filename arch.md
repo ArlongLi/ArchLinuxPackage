@@ -2,18 +2,31 @@
 # 蓝牙 打印机
 ```python
 # 安装 
-sudo pacman -S bluez bluez-utils cups cups-pdf fuse2 git flatpak print-manager system-config-printer
+sudo pacman -S bluez bluez-utils fuse2 git flatpak 
 firefox-i18n-zh-cn
 fuse2 
 fuse3
-exfat-utils dosfstools #查一下安装系统
-exfatprogs #查一下安装系统
-plasma-firewall firewalld
-xdg-desktop-portal xdg-desktop-portal-gtk 
+exfat-utils dosfstools   #查一下安装系统
+exfatprogs   #查一下安装系统
+firewalld   #防火墙
+xdg-desktop-portal xdg-desktop-portal-gtk   #-gtk解决flatpak模糊问题
 
 ```
-## 允许通过PolicyKit进行管理员身份验证
+# 蓝牙
 ```
+bluez bluez-utils
+```
+`sudo systemctl enable bluetooth.service`
+# 打印机
+```python
+cups cups-pdf system-config-printer
+print-manager   #kde
+foomatic-db foomatic-db-engine foomatic-db-ppds foomatic-db-nonfree foomatic-db-nonfree-ppds
+```
+## 允许通过PolicyKit进行管理员身份验证
+```shell
+#可以将PolicyKit配置为允许用户使用 GUI 配置打印机，而无需管理员密码。
+#以下是允许wheel用户组的成员无需密码即可管理打印机的 示例：
 /etc/polkit-1/rules.d/49-allow-passwordless-printer-admin.rules
 
 polkit.addRule(function(action, subject) { 
@@ -24,8 +37,14 @@ polkit.addRule(function(action, subject) {
 });
 
 ```
+如果打算“打印”到 PDF 文档，则可以选择安装cups-pdf软件包。默认情况下，PDF 文件存储在.可以在 中更改位置。 /var/spool/cups-pdf/username/   /etc/cups/cups-pdf.conf
+```
+vim /etc/cups/cups-pdf.conf
+sudo sed -i '$a\Out /home/${USER}/PDF' /etc/cups/cups-pdf.conf
+```
+`sudo systemctl enable cups.service`
 
-## flatpak
+## flatpak国内源
 ```
 sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
 ```
@@ -46,18 +65,15 @@ sudo systemctl enable cups.service
 sudo systemctl start bluetooth.service
 
 sudo systemctl start cups.service
-
-vim /etc/cups/cups-pdf.conf
-sudo sed -i '$a\Out /home/${USER}/PDF' /etc/cups/cups-pdf.conf
 ```
-# Fonts
+# 汉字Fonts
 ```
 wqy-zenhei wqy-microhei wqy-microhei-lite wqy-bitmapfont 
 noto-fonts noto-fonts-cjk noto-fonts-emoji 
 adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts 
 ```
 # fcitx5
-```python
+```shell
 fcitx5-im fcitx5-chinese-addons
 
 sudo vim /etc/environment
@@ -65,6 +81,7 @@ sudo vim /etc/environment
 #前两项在Wayland下去掉
 GTK_IM_MODULE=fcitx
 QT_IM_MODULE=fcitx
+
 XMODIFIERS=@im=fcitx
 SDL_IM_MODULE=fcitx
 INPUT_METHOD=fcitx
@@ -73,8 +90,6 @@ GLFW_IM_MODULE=ibus
 
 sudo sed -i '$a\GTK_IM_MODULE=fcitx\nQT_IM_MODULE=fcitx\nXMODIFIERS=@im=fcitx\nSDL_IM_MODULE=fcitx\nINPUT_METHOD=fcitx\nGLFW_IM_MODULE=ibus' /etc/environment
 
-
-/home/${USER}/t.txt
 ```
 # ibus
 ```
@@ -89,7 +104,7 @@ XMODIFIERS=@im=ibus
 sudo sed -i '$a\GTK_IM_MODULE=ibus\nQT_IM_MODULE=ibus\nXMODIFIERS=@im=ibus' /etc/environment
 
 ```
-# 个人目录
+# 个人目录转为英文
 ```
 export LANG=en_US
 xdg-user-dirs-gtk-update
@@ -97,20 +112,26 @@ export LANG=zh_CN.UTF-8
 ```
 
 # yay
-```
+```shell
 sudo pacman -S --needed base-devel git
 
 git clone https://aur.archlinux.org/yay.git
 
 makepkg -si
-
+#图形AUR helpers
 pamac-aur
+#chrome: 
+yay -S google-chrome
 google-chrome
 
 ```
-## Arch Amd
+## Amd显卡驱动
+### 3D 加速的 DRI 驱动程序 + Xorg中提供 2D 加速 + Vulkan支持 + 32位
 ```
 mesa xf86-video-amdgpu lib32-mesa vulkan-radeon lib32-vulkan-radeon
+```
+### VA-API + VDPAU视频硬解 + 32位
+```shell
 libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau
 ```
 
@@ -123,19 +144,14 @@ sudo pacman -S gpaste gnome-shell-extension-appindicator gnome-shell-extension-d
 ```
 # 交换文件
 ```
-swapFile(){
-    #创建一个 32 GiB 的交换文件:
-    echo "创建32G交换文件"
-    sudo dd if=/dev/zero of=/swapfile bs=1M count=32k status=progress && sudo chmod 0600 /swapfile
-    
-    sudo mkswap -U clear /swapfile
-    sudo swapon /swapfile && sudo sed -i '$a\/swapfile none swap defaults 0 0' /etc/fstab
-    
-    # sleep 5
-    # sudo reboot
-    RReboot
 
-}
+#创建一个 32 GiB 的交换文件:
+echo "创建32G交换文件"
+sudo dd if=/dev/zero of=/swapfile bs=1M count=32k status=progress && sudo chmod 0600 /swapfile
+    
+sudo mkswap -U clear /swapfile
+sudo swapon /swapfile && sudo sed -i '$a\/swapfile none swap defaults 0 0' /etc/fstab
+    
 ```
 
 ----------------------------
@@ -152,12 +168,12 @@ kdegraphics-thumbnailers: Image files, PDFs and Blender application files.
 kimageformats5: Gimp .xcf files
 libheif: HEIF files
 qt5-imageformats : .webp, .tiff, .tga, .jp2 files
-resvgAUR: Fast and accurate SVG image thumbnails
+resvg AUR: Fast and accurate SVG image thumbnails
 kdesdk-thumbnailers: Plugins for the thumbnailing system
 ffmpegthumbs: Video files (based on ffmpeg)
-raw-thumbnailerAUR: .raw files
+raw-thumbnailer AUR: .raw files
 taglib : Audio files
-kde-thumbnailer-apkAUR: Android package files
+kde-thumbnailer-apk AUR: Android package files
 ```
 在“设置”>“配置 Dolphin...”>“常规”>“预览”中启用所需文件类型的预览显示。
 ```
@@ -166,6 +182,7 @@ sudo pacman -S kdegraphics-thumbnailers kimageformats5 libheif kdesdk-thumbnaile
 
 ## Gnome
 https://wiki.archlinux.org/title/File_manager_functionality#Thumbnail_previews
+
 tumbler: Image files. This must also be installed to expand thumbnailing capabilities to other file types in some cases.
 webp-pixbuf-loader: .webp images
 poppler-glib: Adobe .pdf files
@@ -179,6 +196,7 @@ gnome-epub-thumbnailer: .epub and .mobi ebook files
 mcomixAUR: .cbr comicbook archives
 folderpreviewAUR: folder thumbnailer
 f3d: 3D files, including glTF, stl, step, ply, obj, fbx.
+
 有时视频缩略图不显示。要解决这个问题（如在Nautilus上没有视频缩略图中所提到的），您必须安装ffmpegthumbnailer、gst-libav、gst-plugins-ugly，并删除~/.cache/thumbnails/fail/的内容。
 ```
 tumbler webp-pixbuf-loader poppler-glib ffmpegthumbnailer freetype2 libgsf totem evince gnome-epub-thumbnailer f3d
@@ -188,6 +206,7 @@ ffmpegthumbnailer gst-libav gst-plugins-ugly
 ```
 
 # WPS
+https://github.com/IamDH4/ttf-wps-fonts/archive/master.zip
 ```
 sudo mkdir /usr/share/fonts/wps-fonts
 sudo mv ttf-wps-fonts/* /usr/share/fonts/wps-fonts
@@ -210,8 +229,6 @@ nvidia-lts (for use with the linux-lts kernel)
 nvidia-dkms (for all other kernels)
 
 lib32-nvidia-utils
-
-
 ```
 ### systemd-boot
 ls /boot/loader/entries/    编辑.conf文件加入以下nvidia项 
