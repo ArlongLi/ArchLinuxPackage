@@ -40,3 +40,19 @@ gnome-shell-extension-appindicator gnome-shell-extension-desktop-icons-ng  gnome
 gnome-shell-extension-kimpanel #fcitx5的Gnome
 gnome-shell-extension-bluetooth-quick-connect #Gnome44不需要
 ```
+
+#NVIDIA
+1.执行安装前操作。
+
+2.当前运行的内核的内核头文件和开发包可以通过以下方式安装：
+```
+sudo apt-get install linux-headers-$(uname -r)
+```
+3.启用 contrib 存储库：
+```
+sudo add-apt-repository contrib
+```
+4.删除过时的签名密钥：
+```
+sudo apt-key del 7fa2af80
+```
